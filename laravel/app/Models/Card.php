@@ -14,8 +14,4 @@ class Card extends Model
     {
         return $this->belongsTo(CardType::class);
     }
-    function customer()
-    {
-        return $this->belongsTo(Customer::class);
-    }
 }

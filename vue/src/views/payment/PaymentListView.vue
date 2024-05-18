@@ -1,43 +1,13 @@
 <script>
-import NavbarViewVue from '../inc/NavbarView.vue';
-import axios from 'axios';
-
+import NavbarView from '../inc/NavbarView.vue';
 export default {
     components:{
-        NavbarViewVue
+        NavbarView
     },
     data() {
         return{
-            url: 'http://127.0.0.1:8000/api/payment',
-            payment: []
+
         }
-    },
-    mounted() {
-        this.getPayment();
-    },
-    methods: {
-        getPayment() {
-            axios.get(`${this.url}`)
-            .then(response => {
-            this.payment = (response.data.data);
-          })
-        //   .catch(error => {
-        //     console.error('Error fetching payment', error);
-        //   });
-        },
-        paymentDelete(id) {
-        axios.delete(`${this.url}/${id}`)
-          .then(() => {
-            this.getPayment();
-            this.$router.push('/dashboard/payment');
-          })
-          .catch(error => {
-            console.error('Error deleting payment', error);
-          });
-        },
-        edit(id) {
-        this.$router.push({ name: 'paymentEdit', params: { id: id } });
-      }
     }
 }
 
@@ -45,7 +15,7 @@ export default {
 
 <template>
     <main>
-        <NavbarViewVue/>
+        <NavbarView/>
         <section class="main_content dashboard_part">
             <div class="container card card-body mt-5 ms-2">
                 <div class="row">
@@ -73,23 +43,21 @@ export default {
                     <thead class="table_color">
                         <tr>
                             <th>SL</th>
-                            <th>Customer Name</th>
+                            <th>Date</th>
                             <th>Amount</th>
                             <th>Transaction No.</th>
-                            <th>Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(p, i) in payment" :key="p.id">
-                            <td>{{ i + 1 }}</td>
-                            <td>{{ p.customer.customer_name }}</td>
-                            <td>{{ p.amount }}</td>
-                            <td>{{ p.transaction_no }}</td>
-                            <td>{{ p.date }}</td>
+                        <tr>
+                            <th>1</th>
+                            <td>14/04/2023</td>
+                            <td>39000</td>
+                            <td>475836</td>
                             <td>
-                                <button class="btn btn-success btn-sm me-2" @click="edit(p.id)">Edit</button>
-                                <button class="btn btn-danger btn-sm" @click="paymentDelete(p.id)">Delete</button>
+                                <button class="btn btn-success btn-sm me-2">Edit</button>
+                                <button class="btn btn-danger btn-sm">Delete</button>
                             </td>
                         </tr>
                     </tbody>

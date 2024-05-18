@@ -56,7 +56,6 @@ import CardDetailsEdit from '@/views/card/CardDetailsEdit.vue'
 import CardDetailsAdd from '@/views/card/CardDetailsAdd.vue'
 import InterestListView from '@/views/interest/InterestListView.vue'
 import InterestAdd from '@/views/interest/InterestAdd.vue'
-import PaymentEdit from '@/views/payment/PaymentEdit.vue'
 
 
 
@@ -188,11 +187,6 @@ const router = createRouter({
       component: PaymentAdd
     },
     {
-      path: '/dashboard/paymentEdit/:id',
-      name: 'paymentEdit',
-      component: PaymentEdit
-    },
-    {
       path: '/dashboard/interest',
       name: 'interest',
       component: InterestListView
@@ -305,7 +299,7 @@ const router = createRouter({
       props: true // Pass route params as props to the component
     },
     {
-      path: '/dashboard/cardDetails',
+      path: '/dashboard/cardDetails/',
       name: 'cardDetails',
       component: CardDetailsListView
     },
