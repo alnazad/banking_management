@@ -7,7 +7,7 @@
                         <h4 class="table_heading text-center">Customer Update</h4>
                     </div>
                     <div class="card-body">
-                        <form @submit.prevent="handleSubmit">
+                        <!-- <form @submit.prevent="handleSubmit"> -->
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -111,11 +111,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <button type="submit" @click="savaCustomer" class="btn btn-primary form-control mt-4">Submit</button>
+                                        <button type="submit" @click="updateCustomer" class="btn btn-primary form-control mt-4">Submit</button>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        <!-- </form> -->
                     </div>
                 </div>
             </div>
@@ -123,14 +123,16 @@
     </section>
 </template>
 
+
 <script>
 import bcrypt from 'bcryptjs';
-import axios from 'axios'
+import axios from 'axios';
+
 export default {
     data() {
         return {
             url: 'http://127.0.0.1:8000/api/customer',
-            accountType: '',
+            accountType: [],
             selectedAccountType: '',
             account_number: '',
             name: '',
@@ -158,25 +160,24 @@ export default {
             documentError: '',
             password: '',
             passwordError: '',
-        }
+        };
     },
     mounted() {
         this.getAccountType();
         this.generateAccountNumber();
-
+        this.getCustomer();
     },
     methods: {
         generateAccountNumber() {
-          const randomNumber = Math.floor(Math.random() * 1000000000);
-          const paddedNumber = randomNumber.toString().padStart(10, '0');
-          this.account_number = 'ACCT-' + paddedNumber;
+            const randomNumber = Math.floor(Math.random() * 1000000000);
+            const paddedNumber = randomNumber.toString().padStart(10, '0');
+            this.account_number = 'ACCT-' + paddedNumber;
         },
         getAccountType() {
             axios.get('http://127.0.0.1:8000/api/accountType')
                 .then(res => {
-                    this.accountType = (res.data.data)
-                })
-
+                    this.accountType = res.data.data;
+                });
         },
         handleImageUpload(event) {
             this.photo = event.target.files[0];
@@ -184,98 +185,98 @@ export default {
         hash(password) {
             return bcrypt.hashSync(password, 10);
         },
-        savaCustomer() {
-            let formData = new FormData();
-            const hashedPassword = this.hash(this.password);
-            formData.append('account_number', this.account_number);
-            formData.append('customer_name', this.name);
-            formData.append('email', this.email);
-            formData.append('mobile', this.phone);
-            formData.append('address', this.address);
-            formData.append('photo', this.photo);
-            formData.append('nid_number', this.nidNumber);
-            formData.append('date_of_birth', this.date);
-            formData.append('nominee_name', this.nomineeName);
-            formData.append('nominee_mobile', this.nomineePhone);
-            formData.append('nominee_nid_number', this.nomineeNID);
-            formData.append('document', this.document);
-            formData.append('account_type_id', this.selectedAccountType);
-            formData.append('password', hashedPassword);
-
-             //console.log(formData);
-            axios.post(`${this.url}`, formData)
+        getCustomer() {
+            const id = this.$route.params.id;
+            axios.get(`${this.url}/${id}/edit`)
                 .then(res => {
-                     console.log(res)
-                    this.$router.push({name:"customerList"})
-                })
-                .catch(error => {
-                    console.error(error);
+                    const dt = res.data.data;
+                    this.account_number = dt.account_number;
+                    this.name = dt.customer_name;
+                    this.email = dt.email;
+                    this.phone = dt.mobile;
+                    this.address = dt.address;
+                    this.photo = dt.photo;
+                    this.nidNumber = dt.nid_number;
+                    this.date = dt.date_of_birth;
+                    this.nomineeName = dt.nominee_name;
+                    this.nomineePhone = dt.nominee_mobile;
+                    this.nomineeNID = dt.nominee_nid_number;
+                    this.document = dt.document;
+                    this.selectedAccountType = dt.account_type_id;
                 });
-
         },
-        handleSubmit() {
-            this.nameError = '';
-            this.emailError = '';
-            this.phoneError = '';
-            this.addressError = '';
-            this.nidNumberError = '';
-            this.dateError = '';
-            this.nomineeNameError = '';
-            this.nomineePhoneError = '';
-            this.documentError = '';
-            this.nomineeNIDError = '';
-            this.passwordError = '';
-            this.imageError = '';
+        updateCustomer() {
+    // Create a FormData object to send multipart/form-data
+    let formData = new FormData();
+    
+    // Hash the password
+    const hashedPassword = this.hash(this.password);
+    
+    // Append all form fields to the FormData object
+    formData.append('account_number', this.account_number);
+    formData.append('customer_name', this.name);
+    formData.append('email', this.email);
+    formData.append('mobile', this.phone);
+    formData.append('address', this.address);
+    formData.append('photo', this.photo);
+    formData.append('nid_number', this.nidNumber);
+    formData.append('date_of_birth', this.date);
+    formData.append('nominee_name', this.nomineeName);
+    formData.append('nominee_mobile', this.nomineePhone);
+    formData.append('nominee_nid_number', this.nomineeNID);
+    formData.append('document', this.document);
+    formData.append('account_type_id', this.selectedAccountType);
+    formData.append('password', hashedPassword);
 
-            if (this.name.length < 1) {
-                this.nameError = 'Name is required';
-            }
-            if (this.email.length < 1) {
-                this.emailError = 'Email is required';
-            }
-            if (this.phone.length < 1) {
-                this.phoneError = 'Phone is required';
-            }
-            if (this.address.length < 1) {
-                this.addressError = 'Address is required';
-            }
-            if (this.nidNumber.length < 1) {
-                this.nidNumberError = 'NID Number is required';
-            }
-            if (this.date.length < 1) {
-                this.dateError = 'Date is required';
-            }
-            if (this.nomineeName.length < 1) {
-                this.nomineeNameError = 'Nominee Name is required';
-            }
-            if (this.nomineePhone.length < 1) {
-                this.nomineePhoneError = 'Nominee Phone is required';
-            }
-            if (this.nomineeNID.length < 1) {
-                this.nomineeNIDError = 'Nominee NID is required';
-            }
-            if (this.document.length < 1) {
-                this.documentError = 'Document is required';
-            }
-            if (this.password.length < 1) {
-                this.passwordError = 'Password is required';
-            }
-            if (this.photo.length < 1) {
-                this.passwordError = 'Image is required';
-            }
-
-        }
-
-    },
-    watch: {
-        'name': function () {
-            if (this.name.length < 4) {
-                this.nameError = 'Name type Required'
-            } else {
-                this.nameError = ''
-            }
-        }
+    // Log FormData content for debugging
+    for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
     }
 
-}
+    axios.put(`${this.url}/${this.$route.params.id}`, formData)
+        .then(res => {
+            this.$router.push({ name: "customerList" });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            if (error.response && error.response.data) {
+                console.error('Response data:', error.response.data);
+            }
+        });
+},
+
+
+        // handleSubmit() {
+        //     this.nameError = '';
+        //     this.emailError = '';
+        //     this.phoneError = '';
+        //     this.addressError = '';
+        //     this.nidNumberError = '';
+        //     this.dateError = '';
+        //     this.nomineeNameError = '';
+        //     this.nomineePhoneError = '';
+        //     this.documentError = '';
+        //     this.nomineeNIDError = '';
+        //     this.passwordError = '';
+        //     this.imageError = '';
+
+        //     if (this.name.length < 1) this.nameError = 'Name is required';
+        //     if (this.email.length < 1) this.emailError = 'Email is required';
+        //     if (this.phone.length < 1) this.phoneError = 'Phone is required';
+        //     if (this.address.length < 1) this.addressError = 'Address is required';
+        //     if (this.nidNumber.length < 1) this.nidNumberError = 'NID Number is required';
+        //     if (this.date.length < 1) this.dateError = 'Date is required';
+        //     if (this.nomineeName.length < 1) this.nomineeNameError = 'Nominee Name is required';
+        //     if (this.nomineePhone.length < 1) this.nomineePhoneError = 'Nominee Phone is required';
+        //     if (this.nomineeNID.length < 1) this.nomineeNIDError = 'Nominee NID is required';
+        //     if (this.document.length < 1) this.documentError = 'Document is required';
+        //     if (this.password.length < 1) this.passwordError = 'Password is required';
+        //     if (!this.photo) this.imageError = 'Image is required';
+
+        //     if (!this.nameError && !this.emailError && !this.phoneError && !this.addressError && !this.nidNumberError && !this.dateError && !this.nomineeNameError && !this.nomineePhoneError && !this.nomineeNIDError && !this.documentError && !this.passwordError && !this.imageError) {
+        //         this.updateCustomer();
+        //     }
+        // }
+    }
+};
 </script>

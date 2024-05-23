@@ -95,24 +95,45 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Customer $customer)
+    public function edit(string $id)
     {
-        //
+        $customer = Customer::with('accountType')->find($id);
+        return $this->sendResponse($customer, 'customer Edit successfully');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Customer $customer)
-    {
-        //
-    }
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'account_number' => 'required|string|max:255',
+        'customer_name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'mobile' => 'required|string|max:255',
+        'address' => 'required|string|max:255',
+        'photo' => 'required|image|max:2048',
+        'nid_number' => 'required|string|max:255',
+        'date_of_birth' => 'required|date',
+        'nominee_name' => 'required|string|max:255',
+        'nominee_mobile' => 'required|string|max:255',
+        'nominee_nid_number' => 'required|string|max:255',
+        'document' => 'required|string|max:255',
+        'account_type_id' => 'required|integer',
+        'password' => 'required|string|min:8',
+    ]);
+
+    // Update customer logic here
+
+    return response()->json(['message' => 'Customer updated successfully']);
+}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customer $customer)
+    public function destroy(string $id)
     {
-        //
+        $customer = Customer::find($id)->delete();
+        return $this->sendResponse($customer, 'customer Delete successfully');
     }
 }
