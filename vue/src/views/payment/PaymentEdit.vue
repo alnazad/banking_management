@@ -31,7 +31,7 @@ export default {
                     this.payment_list = getData;
                 })
                 .catch(error => {
-                    console.error('Error fetching employee types:', error);
+                    console.error('Error fetching payment:', error);
                 });
         },
         getEmployee() {
@@ -58,7 +58,7 @@ export default {
             };
             axios.put(`${this.url}/${this.id}`, aldata)
                 .then(res => {
-                    this.$router.push("/dashboard/payment");
+                    this.$router.push({name:'payment'});
                 })
                 .catch(error => {
                     console.error('Error updating employee:', error);
@@ -83,15 +83,13 @@ export default {
 <template>
     <main>
         <NavbarViewVue/>
-        <section class="main_content dashboard_part">
             <div class="container card mt-5 ms-2">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div class="card-header mt-5">
-                            <h4 class="table_heading">Payment List Add</h4>
+                            <h4 class="table_heading">Payment List Edit</h4>
                         </div>
                             <div class="card-body">
-                                <!-- <form @submit.prevent="handleSubmit">  -->
                                 <div class="mb-3">
                                     <label for="customerid" class="form-label">Customer Name</label>
                                     <select class="form-select" v-model="customer_id"
@@ -134,12 +132,10 @@ export default {
                                 </div>
 
                                 <button type="submit" @click="updatePayment" class="btn btn-primary">Submit</button>
-                            <!-- </form> -->
                         </div>
                     </div>
                 </div>
 
             </div>
-        </section>
     </main>
 </template>

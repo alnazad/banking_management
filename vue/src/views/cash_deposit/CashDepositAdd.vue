@@ -35,7 +35,7 @@ export default {
                 date: this.date
             })
             .then(res =>{
-                this.$router.push("/dashboard/cashDeposit")
+                this.$router.push({name:'cashDeposit'})
             })
         },
     }
@@ -45,7 +45,6 @@ export default {
 <template>
     <main>
         <NavbarViewVue/>
-        <section class="main_content dashboard_part">
             <div class="container card mt-5 ms-2">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
@@ -53,7 +52,6 @@ export default {
                             <h4 class="table_heading">Cash Deposit Add</h4>
                         </div>
                         <div class="card-body">
-                            <!-- <form @submit.prevent="handleSubmit"> -->
                                 <div class="mb-3">
                                     <label for="customerid" class="form-label">Customer Name</label>
                                     <select class="form-select" v-model="customer_name"
@@ -87,12 +85,9 @@ export default {
                                 </div>
 
                                 <button type="submit" @click="saveDeposit" class="btn btn-primary">Submit</button>
-                            <!-- </form> -->
                         </div>
                     </div>
                 </div>
-
             </div>
-        </section>
     </main>
 </template>

@@ -11,7 +11,7 @@ class WithdrawalController extends Controller
     use ApiResponse;
     /**
      * Display a listing of the resource.
-     */
+     */ 
     public function index()
     {
         $withdrawal= Withdrawal::with('customer')->get();

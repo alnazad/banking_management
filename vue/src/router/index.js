@@ -56,6 +56,8 @@ import InterestListView from '@/views/interest/InterestListView.vue'
 import InterestAdd from '@/views/interest/InterestAdd.vue'
 import PaymentEdit from '@/views/payment/PaymentEdit.vue'
 import Admin from '@/views/Admin.vue'
+import CashDepositEdit from '@/views/cash_deposit/CashDepositEdit.vue'
+import WithdrawalEdit from '@/views/withdrawal/WithdrawalEdit.vue'
 
 
 
@@ -182,6 +184,11 @@ const router = createRouter({
                     component: WithdrawalAdd
                 },
                 {
+                    path: 'withdrawalEdit/:id',
+                    name: 'withdrawalEdit',
+                    component: WithdrawalEdit
+                },
+                {
                     path: 'cashDeposit',
                     name: 'cashDeposit',
                     component: CashDepositListView
@@ -190,6 +197,11 @@ const router = createRouter({
                     path: 'cashDepositAdd',
                     name: 'cashDepositAdd',
                     component: CashDepositAdd
+                },
+                {
+                    path: 'cashDepositEdit/:id',
+                    name: 'cashDepositEdit',
+                    component: CashDepositEdit
                 },
                 {
                     path: 'payment',

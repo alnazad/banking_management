@@ -1,8 +1,6 @@
 <template>
     <main>
         <NavbarViewVue />
-
-        <section class="main_content dashboard_part">
             <div class="container card mt-5 ms-2">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
@@ -10,7 +8,6 @@
                             <h4 class=" table_heading">Account Type Edit</h4>
                         </div>
                         <div class="card-body">
-                            <!-- <form @submit.prevent="handleSubmit"> -->
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Account Type</label>
                                 <input type="text" v-model="account_type" class="form-control"
@@ -20,14 +17,11 @@
                                 </p>
                             </div>
                             <button type="submit" @click="updateAccountType" class="btn btn-primary">Submit</button>
-                            <!-- </form> -->
-
                         </div>
                     </div>
                 </div>
 
             </div>
-        </section>
     </main>
 </template>
 

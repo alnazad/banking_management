@@ -20,7 +20,7 @@ class CashDepositController extends Controller
         return $this->sendResponse($cashDeposit, 'CashDeposit Return fetched successfully');
     }
 
-    /**
+    /** 
      * Show the form for creating a new resource.
      */
     public function create()
@@ -61,7 +61,7 @@ class CashDepositController extends Controller
      */
     public function edit(string $id)
     {
-        $deposit = Deposit::with('customer')->find($id);
+        $deposit = CashDeposit::with('customer')->find($id);
         return $this->sendResponse($deposit, 'Cash Deposit Edit fetched successfully');
     }
 
@@ -79,7 +79,7 @@ class CashDepositController extends Controller
             return $this->sendError('validation Error.', $validator->errors(), 422);
         }
         $input = $request->all();
-        $deposit = Deposit::find($id)->update($input);
+        $deposit = CashDeposit::find($id)->update($input);
         return $this->sendResponse($deposit, 'Payment Update successfully');
     }
 
