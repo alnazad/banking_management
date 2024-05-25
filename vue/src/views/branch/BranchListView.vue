@@ -22,9 +22,7 @@
                         <RouterLink :to="{name:'branchAdd'}" class="btn btn-warning">Add New</RouterLink>
 
                     </div>
-
                 </div>
-
                 <table class="table table-striped ">
                     <thead class="table_color">
                         <tr>

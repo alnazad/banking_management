@@ -1,7 +1,6 @@
 <template>
     <main>
         <NavbarViewVue />
-
             <div class="container card mt-5 ms-2">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
@@ -24,7 +23,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
     </main>
 </template>

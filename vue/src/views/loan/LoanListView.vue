@@ -1,8 +1,7 @@
 <template>
     <main>
         <NavbarViewVue/>
-        
-            <div class="container card card-body mt-5 ms-2">
+                    <div class="container card card-body mt-5 ms-2">
 
                 <div class="row">
                     <div class="col-md-4">
@@ -21,11 +20,8 @@
                     </div>
                     <div class="col-md-6 text-end mt-2">
                         <RouterLink :to="{name:'loanAdd'}" class="btn btn-warning">Add New</RouterLink>
-                        
                     </div>
-
                 </div>
-
                 <table class="table table-striped ">
                     <thead class="table_color">
                         <tr>
