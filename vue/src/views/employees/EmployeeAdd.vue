@@ -2,7 +2,6 @@
     <main>
         <NavbarViewVue />
 
-        <section class="main_content dashboard_part">
             <div class="container card mt-5 ms-2">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
@@ -48,7 +47,6 @@
                     </div>
                 </div>
             </div>
-        </section>
     </main>
 </template>
 

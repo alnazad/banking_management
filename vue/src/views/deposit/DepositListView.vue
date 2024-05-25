@@ -2,9 +2,7 @@
     <main>
         <NavbarViewVue/>
         
-        <section class="main_content dashboard_part">
             <div class="container card card-body mt-5 ms-2">
-
                 <div class="row">
                     <div class="col-md-4">
                         <div class="input-group rounded">
@@ -55,7 +53,6 @@
                     </tbody>
                 </table>
             </div>
-        </section>
     </main>
 
 </template>
